@@ -1,13 +1,17 @@
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class View {
-
-    private static TextField textFieldGraph = new TextField();
+    private static Graph graph =new Graph();
+    private static JTextField textFieldGraph = new JTextField(10);
     private static JButton butAdd = new JButton("Add");
     private static JButton butDelete = new JButton("Delete");
     private static JButton butEdge = new JButton("Create edge");
@@ -27,7 +31,15 @@ public class View {
         panel.add(addComponentsToPane());
         panel.add(createGraphPanel());
         frame.add(panel);
+
+
+        butAdd.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                graph.graph.insertVertex(graph.parent,null, "new", 100, 100, 80, 30);
+            }
+        });
     }
+
 
 
 
@@ -48,7 +60,7 @@ public class View {
         c.ipady = 0;
         c.weightx = 0.0;
         c.weighty = 0.0;
-        panel.add(new Graph(), c);
+        panel.add(graph, c);
 
         //for Implementation steps
         c.insets = new Insets(10, 25, 0, 25);
@@ -57,12 +69,9 @@ public class View {
         c.gridheight = 1;
         panel.add(new Label("Implementation steps:"), c);
 
-        JLabel label = new JLabel();
-        Border border = BorderFactory.createLineBorder(Color.BLUE);
-        label.setBorder(border);
-        label.setPreferredSize(new Dimension(150, 150));
+        //textFieldGraph.getPreferredSize(new Dimension())
         c.insets = new Insets(35, 25, 0, 25);
-        panel.add(label, c);
+        panel.add(textFieldGraph, c);
         return panel;
 
 
@@ -74,7 +83,7 @@ public class View {
         GridBagConstraints c = new GridBagConstraints();
 
         c.fill = GridBagConstraints.NONE;//size const
-        c.gridheight = 2;
+        c.gridheight = 1;
         c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 0;
@@ -83,7 +92,12 @@ public class View {
         c.ipady = 0;
         c.weightx = 0.0;
         c.weighty = 0.0;
+//        BufferedImage image= ImageIO.read("E:\git_project\GraphVis\src\main\resources\arrow.png");
+//        JLabel label = new JLabel(icon1);
+//        panel.add(label).setBounds(10,10,27,30);
         graphPanel.add(new JLabel("Work with graph"), c);
+
+
 
         c.gridx = 1;
         c.gridheight = 1;
@@ -107,4 +121,6 @@ public class View {
         graphPanel.add(dop2Panel, c);
         return graphPanel;
     }
+
+
 }
