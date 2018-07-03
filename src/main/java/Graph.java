@@ -8,6 +8,7 @@ class Graph extends JPanel {
     private static final long serialVersionUID = 1L;
     private mxGraph graph;
     private Object parent;
+    private int angle = 0;
 
     Graph() {
         this.graph = new mxGraph();
@@ -27,7 +28,9 @@ class Graph extends JPanel {
 
     public void addNewVertex(){
         findEmptyZone();
-        graph.insertVertex(parent,null, "new", 100, 100, 80, 30);
+        angle +=20;
+
+        graph.insertVertex(parent,null, "new", 160 + 70*Math.cos(angle) , 75 + 70*Math.sin(angle), 80, 30);
     }
 
     private void findEmptyZone(){
