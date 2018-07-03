@@ -21,10 +21,6 @@ public class GraphControlPanel extends JPanel {
         addPanel_1(gbc);
         addPanel_2(gbc);
 
-        //        BufferedImage image= ImageIO.read("E:\git_project\GraphVis\src\main\resources\arrow.png");
-//        JLabel label = new JLabel(icon1);
-//        panel.add(label).setBounds(10,10,27,30);
-
         butAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GraphControlPanel.graph.addNewVertex();
@@ -80,5 +76,4 @@ public class GraphControlPanel extends JPanel {
         add(new JLabel("Work with graph"), c);
         return c;
     }
-
 }
