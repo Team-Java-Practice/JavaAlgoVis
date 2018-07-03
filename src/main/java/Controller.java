@@ -19,6 +19,5 @@ public class Controller {
                 View.createGUI();
             }
         });
-
     }
 }

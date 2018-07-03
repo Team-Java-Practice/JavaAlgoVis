@@ -2,10 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View {
-    private static final Graph graph = new Graph();
+    public static final Graph graph = new Graph();
     private static final JTextField textFieldGraph = new JTextField(10);
-    //изменила на паблик для демонстрации сохранения панели
-    public static final GraphControlPanel graphCP = new GraphControlPanel(graph);
+    private static final GraphControlPanel graphCP = new GraphControlPanel(graph);
 
     public static void createGUI() {
         JFrame frame = new JFrame();
