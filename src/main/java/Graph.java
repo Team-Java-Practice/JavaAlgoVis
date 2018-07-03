@@ -6,8 +6,8 @@ import java.awt.*;
 
 class Graph extends JPanel {
     private static final long serialVersionUID = 1L;
-    mxGraph graph;
-    Object parent;
+    private mxGraph graph;
+    private Object parent;
 
     Graph() {
         this.graph = new mxGraph();
@@ -25,4 +25,12 @@ class Graph extends JPanel {
         this.add(graphComponent, BorderLayout.CENTER);
     }
 
+    public void addNewVertex(){
+        findEmptyZone();
+        graph.insertVertex(parent,null, "new", 100, 100, 80, 30);
+    }
+
+    private void findEmptyZone(){
+        /* todo */
+    }
 }
