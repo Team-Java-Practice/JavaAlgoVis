@@ -12,7 +12,7 @@ public class GraphControlPanel extends JPanel {
     private static final JButton butEndV = new JButton("End Vertex");
     private static final JButton butStartAlgo = new JButton("Start Dijkstra");
 
-    public GraphControlPanel(Graph graph){
+    public GraphControlPanel(Graph graph) {
         super(null);
         GraphControlPanel.graph = graph;
         setLayout(new GridBagLayout());
@@ -75,10 +75,5 @@ public class GraphControlPanel extends JPanel {
 
         add(new JLabel("Work with graph"), c);
         return c;
-    }
-
-    //временная версия для сохранения графа
-    public static JPanel graphPanel(Graph graph){
-        return new JPanel((LayoutManager) graph);
     }
 }
