@@ -76,4 +76,9 @@ public class GraphControlPanel extends JPanel {
         add(new JLabel("Work with graph"), c);
         return c;
     }
+
+    //временная версия для сохранения графа
+    public static JPanel graphPanel(Graph graph){
+        return new JPanel((LayoutManager) graph);
+    }
 }
