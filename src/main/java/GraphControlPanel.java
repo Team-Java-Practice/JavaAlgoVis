@@ -10,7 +10,7 @@ public class GraphControlPanel extends JPanel {
     private static Graph graph = null;
     private static final JButton butAdd = new JButton("Add");
     private static final JButton butDelete = new JButton("Delete");
-    private static final JButton butEdge = new JButton("Delete edge");
+    private static final JButton butEdge = new JButton("Add edge");
     private static final JButton butStartV = new JButton("Start Vertex");
     private static final JButton butEndV = new JButton("End Vertex");
     private static final JButton butStartAlgo = new JButton("Start Dijkstra");
@@ -45,23 +45,29 @@ public class GraphControlPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 graph.graph.selectChildCell();
                 graph.graph.removeCells();
+                if(counter>1)
                 counter--;
+
             }
         }
         );
 
+//HEEEEEEEEEEEELP
         butEdge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /*int vertexFrom = (Integer) fromSpinner.getValue();
+                int vertexFrom = (Integer) fromSpinner.getValue();
                 int vertexTo = (Integer) toSpinner.getValue();
 
 
 
-                mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
-                mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
-                System.out.println(cellFrom.getId());
-                System.out.println(cellTo.getId());
-               graph.graph.insertEdge(graph.graph.getDefaultParent(), null, "Edge", cellFrom, cellTo)*/;
+                //mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
+                //mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
+
+                Object cellFrom =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
+                Object cellTo =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
+               // System.out.println(cellFrom.getId());
+               // System.out.println(cellTo.getId());
+               graph.graph.insertEdge(graph.graph.getDefaultParent(), null, "Edge", cellFrom, cellTo);
             }
         });
     }
