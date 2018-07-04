@@ -1,3 +1,6 @@
+import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGraphModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,11 +15,16 @@ public class GraphControlPanel extends JPanel {
     private static final JButton butEndV = new JButton("End Vertex");
     private static final JButton butStartAlgo = new JButton("Start Dijkstra");
 
-    public GraphControlPanel(Graph graph){
+    private static JSpinner fromSpinner;
+    private static JSpinner toSpinner;
+
+    public static int counter = 0;
+
+    public GraphControlPanel(final Graph graph) {
         super(null);
         GraphControlPanel.graph = graph;
         setLayout(new GridBagLayout());
-        GridBagConstraints gbc = getGridBagConstraints();
+        final GridBagConstraints gbc = getGridBagConstraints();
 
         addPanel_1(gbc);
         addPanel_2(gbc);
@@ -24,6 +32,30 @@ public class GraphControlPanel extends JPanel {
         butAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GraphControlPanel.graph.addNewVertex();
+                counter++;
+            }
+        });
+        butDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                graph.graph.selectChildCell();
+                graph.graph.removeCells();
+                counter--;
+            }
+        }
+        );
+
+        butEdge.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                /*int vertexFrom = (Integer) fromSpinner.getValue();
+                int vertexTo = (Integer) toSpinner.getValue();
+
+
+
+                mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
+                mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
+                System.out.println(cellFrom.getId());
+                System.out.println(cellTo.getId());
+               graph.graph.insertEdge(graph.graph.getDefaultParent(), null, "Edge", cellFrom, cellTo)*/;
             }
         });
     }
@@ -48,6 +80,21 @@ public class GraphControlPanel extends JPanel {
         dop1Panel.add(butAdd);
         dop1Panel.add(butDelete);
         dop1Panel.add(butEdge);
+
+        //спиннер для начальной вершины
+        SpinnerModel fromSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
+        fromSpinner = new JSpinner(fromSpinnerModel);
+        fromSpinner.setSize(new Dimension(55, 25));
+        fromSpinner.setLocation(10, 155);
+
+        //cпиннер для конечной вершины
+        SpinnerModel toSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
+        toSpinner = new JSpinner(toSpinnerModel);
+        toSpinner.setSize(new Dimension(55, 25));
+        toSpinner.setLocation(100, 155);
+
+        dop1Panel.add(fromSpinner);
+        dop1Panel.add(toSpinner);
 
         gbc.gridx = 1;
         gbc.gridy = 1;

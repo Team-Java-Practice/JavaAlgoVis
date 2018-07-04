@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class View {
-    private static final Graph graph = new Graph();
+    public static final Graph graph = new Graph();
     private static final JTextField textFieldGraph = new JTextField(10);
     private static final GraphControlPanel graphCP = new GraphControlPanel(graph);
 
@@ -12,34 +10,8 @@ public class View {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-        Font font = new Font("Verdana", Font.PLAIN, 11);
-
         JMenuBar menuBar = new JMenuBar();
-
-        JMenu fileMenu = new JMenu("File");
-        fileMenu.setFont(font);
-
-        JMenuItem createGraph = new JMenuItem("Create list for graph");
-        createGraph.setFont(font);
-        fileMenu.add(createGraph);
-
-        JMenuItem openItem = new JMenuItem("Open graph");
-        openItem.setFont(font);
-        fileMenu.add(openItem);
-
-
-        JMenuItem exitItem = new JMenuItem("Exit");
-        exitItem.setFont(font);
-        fileMenu.add(exitItem);
-
-        exitItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        menuBar.add(fileMenu);
+        menuBar.add(Menu.doFileMenu());
         frame.setJMenuBar(menuBar);
 
         //create panel
@@ -52,7 +24,6 @@ public class View {
         frame.setSize(700, 400);
         frame.setVisible(true);
         frame.pack();
-
     }
 
     public static JPanel addComponentsToPane() {
@@ -86,7 +57,5 @@ public class View {
         c.insets = new Insets(35, 25, 0, 25);
         panel.add(textFieldGraph, c);
         return panel;
-
-
     }
 }
