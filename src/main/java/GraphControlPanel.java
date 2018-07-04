@@ -12,7 +12,7 @@ public class GraphControlPanel extends JPanel {
     private static final JButton butEndV = new JButton("End Vertex");
     private static final JButton butStartAlgo = new JButton("Start Dijkstra");
 
-    public GraphControlPanel(Graph graph) {
+    public GraphControlPanel(final Graph graph) {
         super(null);
         GraphControlPanel.graph = graph;
         setLayout(new GridBagLayout());
@@ -26,6 +26,13 @@ public class GraphControlPanel extends JPanel {
                 GraphControlPanel.graph.addNewVertex();
             }
         });
+        butDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                graph.graph.selectChildCell();
+                graph.graph.removeCells();
+            }
+        }
+        );
     }
 
     private void addPanel_2(GridBagConstraints gbc) {

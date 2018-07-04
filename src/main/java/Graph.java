@@ -6,7 +6,7 @@ import java.awt.*;
 
 class Graph extends JPanel {
     private static final long serialVersionUID = 1L;
-    private mxGraph graph;
+    public mxGraph graph;
     private Object parent;
     private int angle = 0;
 
