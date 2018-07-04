@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class Menu extends JFrame {
-    private static Font font = new Font("Verdana", Font.PLAIN, 11);
+    private static Font font = new Font("Verdana", Font.ITALIC, 16);
     private static JMenu fileMenu = new JMenu("File");
     private static JMenu createGraph = new JMenu("Create graph");
     private static JMenuItem createList = new JMenuItem("List view");

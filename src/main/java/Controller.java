@@ -9,10 +9,6 @@ public class Controller {
         this.view = view;
     }
 
-//    public void viewUpdated() {
-//        view.draw(model);
-//    }
-
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
