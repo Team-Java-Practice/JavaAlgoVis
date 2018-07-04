@@ -8,7 +8,7 @@ class Graph extends JPanel {
     private static final long serialVersionUID = 1L;
     public mxGraph graph;
     public Object parent;
-    private int angle = 0;
+    private double angle = 0;
 
 
     Graph() {
@@ -32,9 +32,14 @@ class Graph extends JPanel {
     }
 
     public void addNewVertex(){
-        angle +=20;
+        angle +=Math.PI/6;
+        int r = 190;
+        if(GraphControlPanel.counter>12) {
+            r /= 2;
+            angle+=Math.PI/5;
+        }
 
-        graph.insertVertex(parent,GraphControlPanel.counter+"", GraphControlPanel.counter, 160 + 70*Math.cos(angle) , 75 + 70*Math.sin(angle), 80, 30);
+        graph.insertVertex(parent,GraphControlPanel.counter+"", GraphControlPanel.counter, 210 + r*Math.cos(angle) , 210 + r*Math.sin(angle), 50, 50, "shape=ellipse");
     }
 
 

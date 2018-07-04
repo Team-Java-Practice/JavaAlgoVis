@@ -24,7 +24,7 @@ public class GraphControlPanel extends JPanel {
     private static JSpinner fromSpinner;
     private static JSpinner toSpinner;
 
-    public static int counter = 0;
+    public static int counter = 1;
 
     public GraphControlPanel(final Graph graph) {
         super(null);
