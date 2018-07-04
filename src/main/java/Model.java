@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class Model {
 
@@ -19,12 +20,13 @@ public class Model {
         myGraph.addEdge(new VertexEdgeVertex(new Vertex("C"), new Vertex("E"), 3));
         myGraph.addEdge(new VertexEdgeVertex(new Vertex("D"), new Vertex("E"), 7));
 
+        AdjacencyList adjacencyList1 = new AdjacencyList(myGraph);
+        System.out.println(adjacencyList1);
 
-        AdjacencyList adjacencyList = new AdjacencyList(myGraph);
-        System.out.println(adjacencyList);
+        myGraph.deleteVertex(new Vertex("C"));
 
-        AdjacencyMatrix adjacencyMatrix = new AdjacencyMatrix(myGraph);
-        System.out.println(adjacencyMatrix);
+        AdjacencyList adjacencyList2 = new AdjacencyList(myGraph);
+        System.out.println(adjacencyList2);
     }
 }
 
@@ -42,23 +44,19 @@ class GraphRepresentation implements GraphInterface {
     public void deleteVertex(final Vertex vertex) {
         if (!Verteces.remove(vertex)) throw new NoSuchElementException();
 
-        // В лоб
-        for (VertexEdgeVertex elem : Edges)
-            if (elem.getDestination().equals(vertex))
-                Edges.remove(elem);
-            else if (elem.getSource().equals(vertex))
-                Edges.remove(elem);
-
         // Более хитро
-//         Edges.removeIf(x -> x.getSource().equals(vertex) || x.getDestination().equals(vertex));
+         Edges.removeIf(x -> x.getSource().equals(vertex) || x.getDestination().equals(vertex));
     }
 
     public void addEdge(VertexEdgeVertex edge) {
         Edges.add(new VertexEdgeVertex(edge.getSource(), edge.getDestination(), edge.getLength()));
     }
 
-    public void deleteEdge(VertexEdgeVertex edge) {
-        if (!Edges.remove(edge)) throw new NoSuchElementException();
+
+    @Override
+    public void deleteEdge(Vertex source, Vertex destination) {
+        if (!Edges.removeIf(x -> x.getSource().equals(source) && x.getDestination().equals(destination)))
+            throw new NoSuchElementException();
     }
 
     public Vertex findNearestVertex(Vertex source) {
@@ -75,7 +73,7 @@ class GraphRepresentation implements GraphInterface {
     }
 
     int getIndexByName(Vertex vertex){
-        int index = Edges.indexOf(vertex);
+        int index = Verteces.indexOf(vertex);
         if (index == -1)
             throw new NoSuchElementException();
         else
@@ -93,6 +91,10 @@ class Vertex {
         this.name = name;
     }
 
+    public Vertex(Vertex vertex) {
+        this.name = vertex.name;
+    }
+
     private String getName() {
         return name;
     }
@@ -101,6 +103,15 @@ class Vertex {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vertex vertex = (Vertex) o;
+        return Objects.equals(name, vertex.name);
+    }
+
 }
 
 class EdgeVertex {
@@ -122,7 +133,22 @@ class EdgeVertex {
 
     @Override
     public String toString() {
-        return " -" + vertex + "(" + length + ")";
+        return " -> " + vertex + "(" + length + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EdgeVertex)) return false;
+        EdgeVertex that = (EdgeVertex) o;
+        return length == that.length &&
+                Objects.equals(vertex, that.vertex);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(length, vertex);
     }
 }
 
@@ -147,6 +173,27 @@ class VertexEdgeVertex {
 
     public int getLength() {
         return length;
+    }
+
+    @Override
+    public String toString() {
+        return source + "--" + length + "--" + destination;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VertexEdgeVertex)) return false;
+        VertexEdgeVertex that = (VertexEdgeVertex) o;
+        return length == that.length &&
+                Objects.equals(source, that.source) &&
+                Objects.equals(destination, that.destination);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(source, destination, length);
     }
 }
 
