@@ -12,19 +12,23 @@ class Graph extends JPanel {
 
 
     Graph() {
+        setSize(750,400);
         this.graph = new mxGraph();
         this.parent = graph.getDefaultParent();
         graph.getModel().beginUpdate();
         try {
-            Object v1 = graph.insertVertex(parent, null, "1", 20, 20, 80, 30);
-            Object v2 = graph.insertVertex(parent, null, "2", 300, 150, 80, 30);
-            graph.insertEdge(parent, null, "Edge", v1, v2);
+//            Object v1 = graph.insertVertex(parent, null, "1", 20, 20, 80, 30);
+//            Object v2 = graph.insertVertex(parent, null, "2", 300, 150, 80, 30);
+//            graph.insertEdge(parent, null, "Edge", v1, v2);
         } finally {
             graph.getModel().endUpdate();
         }
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
+
+
         this.setLayout(new BorderLayout());
         this.add(graphComponent, BorderLayout.CENTER);
+
     }
 
     public void addNewVertex(){
