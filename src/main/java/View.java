@@ -2,9 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View {
+    private static JFrame frame;
     public static final Graph graph = new Graph();
-    private static final JTextField textFieldGraph = new JTextField(10);
+    private static final JTextArea textArea = new JTextArea(10,18);
     private static final GraphControlPanel graphCP = new GraphControlPanel(graph);
+    private static Font font = new Font("Verdana", Font.PLAIN, 16);
+    private static JLabel label = new JLabel("          Implementation steps:");
 
     public static void createGUI() {
         JFrame frame = new JFrame();
@@ -14,48 +17,31 @@ public class View {
         menuBar.add(Menu.doFileMenu());
         frame.setJMenuBar(menuBar);
 
-        //create panel
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(addComponentsToPane());
         panel.add(graphCP);
         frame.add(panel);
 
-        frame.setSize(700, 400);
+        frame.setSize(900, 700);
         frame.setVisible(true);
-        frame.pack();
+        frame.setResizable(false);
+        //frame.pack();
     }
 
-    public static JPanel addComponentsToPane() {
+    public static JPanel addComponentsToPane(){
+        JPanel dopPanel = new JPanel();
+        dopPanel.setLayout(new BoxLayout(dopPanel,BoxLayout.Y_AXIS));
+        label.setFont(font);
+        dopPanel.add(label);
+        dopPanel.add(textArea);
+
         JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
+        graph.setPreferredSize(new Dimension(700,400));
+        panel.add(graph);
+        panel.add(dopPanel);
 
-        //for graph
-        c.anchor = GridBagConstraints.NORTH;
-        c.fill = GridBagConstraints.NONE;//size const
-        c.gridheight = 2;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = 2;
-        c.insets = new Insets(10, 20, 0, 10);
-        c.ipadx = 0;
-        c.ipady = 0;
-        c.weightx = 0.0;
-        c.weighty = 0.0;
-        panel.add(graph, c);
-
-        //for Implementation steps
-        c.insets = new Insets(10, 25, 0, 25);
-        c.gridx = 2;
-        c.gridy = 3;
-        c.gridheight = 1;
-        panel.add(new Label("Implementation steps:"), c);
-
-        //textFieldGraph.getPreferredSize(new Dimension())
-        c.gridheight=2;
-        c.insets = new Insets(35, 25, 0, 25);
-        panel.add(textFieldGraph, c);
         return panel;
     }
 }
