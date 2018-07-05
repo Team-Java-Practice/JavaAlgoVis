@@ -1,12 +1,16 @@
 import javax.sound.midi.Soundbank;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public class Algo {
     private DijkstraTable algoRepr;
+    private GraphRepresentation repr;
     private int stepsNumber;
 
-    Algo(GraphRepresentation repr, Vertex vertex){
-        algoRepr = new DijkstraTable(repr, vertex);
+    Algo(GraphRepresentation repr, Vertex source){
+        this.repr = repr;
+        algoRepr = new DijkstraTable(repr, source);
         stepsNumber = repr.getVertexNumber();
     }
 
@@ -16,6 +20,14 @@ public class Algo {
 
     public void getStatmentByStep(int step){
         /* todo */
+    }
+
+    public int getStepOfDestination(Vertex destination){
+        int indexOfDestination = repr.getIndexByName(destination);
+        for (int i = 0; i < stepsNumber ; i++)
+            if (algoRepr.getCellAccess(i, indexOfDestination).isVisited)
+                return i;
+        throw new NoSuchElementException();
     }
 
 }
@@ -49,6 +61,10 @@ class DijkstraTable {
             cell.isVisited = true;
 
         System.out.println(this);
+    }
+
+    public Cell getCellAccess(int stroke, int indexVertex){
+        return table[stroke][indexVertex];
     }
 
     private void copyPrevStroke(int step) {
