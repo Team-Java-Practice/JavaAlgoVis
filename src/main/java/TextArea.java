@@ -29,7 +29,7 @@ public class TextArea extends JFrame {
 
        setContentPane(panel);
 
-        createGr = new JButton("Create graph");
+        createGr = new JButton("Create graphPicture");
 
         //расположение кнопки по центру
         createGr.setAlignmentX(Component.CENTER_ALIGNMENT);

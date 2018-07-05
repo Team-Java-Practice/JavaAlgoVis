@@ -3,14 +3,14 @@ import java.awt.*;
 
 public class View {
     private static JFrame frame;
-    public static final Graph graph = new Graph();
+    public static final Graph graphPicture = new Graph();
     private static final JTextArea textArea = new JTextArea(10,18);
-    private static final GraphControlPanel graphCP = new GraphControlPanel(graph);
+    private static final GraphControlPanel graphCP = new GraphControlPanel(graphPicture);
     private static Font font = new Font("Verdana", Font.PLAIN, 16);
     private static JLabel label = new JLabel("          Implementation steps:");
 
     public static void createGUI() {
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JMenuBar menuBar = new JMenuBar();
@@ -38,8 +38,8 @@ public class View {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
-        graph.setPreferredSize(new Dimension(700,400));
-        panel.add(graph);
+        graphPicture.setPreferredSize(new Dimension(700,400));
+        panel.add(graphPicture);
         panel.add(dopPanel);
 
         return panel;

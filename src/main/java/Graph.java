@@ -17,9 +17,9 @@ class Graph extends JPanel {
         this.parent = graph.getDefaultParent();
         graph.getModel().beginUpdate();
         try {
-//            Object v1 = graph.insertVertex(parent, null, "1", 20, 20, 80, 30);
-//            Object v2 = graph.insertVertex(parent, null, "2", 300, 150, 80, 30);
-//            graph.insertEdge(parent, null, "Edge", v1, v2);
+//            Object v1 = graphPicture.insertVertex(parent, null, "1", 20, 20, 80, 30);
+//            Object v2 = graphPicture.insertVertex(parent, null, "2", 300, 150, 80, 30);
+//            graphPicture.insertEdge(parent, null, "Edge", v1, v2);
         } finally {
             graph.getModel().endUpdate();
         }

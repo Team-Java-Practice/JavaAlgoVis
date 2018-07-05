@@ -18,7 +18,7 @@ public class GraphControlPanel extends JPanel {
     private static final JButton butUndo = new JButton("Undo");
     private static final JButton butRedo = new JButton("Redo");
     private static Font font = new Font("Verdana", Font.BOLD, 16);
-    private static JLabel label = new JLabel("Work with graph");
+    private static JLabel label = new JLabel("Work with graphPicture");
 
 
     private static JSpinner fromSpinner;
@@ -60,8 +60,8 @@ public class GraphControlPanel extends JPanel {
 
 
 
-                //mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
-                //mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
+                //mxCell cellFrom = (mxCell) ((mxGraphModel)graphPicture.graphPicture.getModel()).getCell(vertexFrom+"");
+                //mxCell cellTo = (mxCell) ((mxGraphModel)graphPicture.graphPicture.getModel()).getCell(vertexTo+"");
 
                 Object cellFrom =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
                 Object cellTo =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");

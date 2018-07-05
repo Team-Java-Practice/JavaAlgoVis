@@ -1,5 +1,3 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -22,8 +20,8 @@ public class Model {
         myGraph.addEdge(new VertexEdgeVertex(new Vertex("C"), new Vertex("E"), 3));
         myGraph.addEdge(new VertexEdgeVertex(new Vertex("D"), new Vertex("E"), 7));
 
-        AdjacencyList adjacencyList1 = new AdjacencyList(myGraph);
-        System.out.println(adjacencyList1);
+//        AdjacencyList adjacencyList1 = new AdjacencyList(myGraph);
+//        System.out.println(adjacencyList1);
 
         Algo answer = new Algo(myGraph, new Vertex("A"));
         System.out.println("Number of steps: " + answer.getNumberOfSteps());

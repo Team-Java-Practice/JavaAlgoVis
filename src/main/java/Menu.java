@@ -9,12 +9,12 @@ import java.io.*;
 public class Menu extends JFrame {
     private static Font font = new Font("Verdana", Font.ITALIC, 16);
     private static JMenu fileMenu = new JMenu("File");
-    private static JMenu createGraph = new JMenu("Create graph");
+    private static JMenu createGraph = new JMenu("Create graphPicture");
     private static JMenuItem createList = new JMenuItem("List view");
     private static JMenuItem createMatrix = new JMenuItem("Matrix view");
 
-    private static JMenuItem openItem = new JMenuItem("Open graph");
-    private static JMenuItem saveItem = new JMenuItem("Save graph");
+    private static JMenuItem openItem = new JMenuItem("Open graphPicture");
+    private static JMenuItem saveItem = new JMenuItem("Save graphPicture");
     private static JMenuItem exitItem = new JMenuItem("Exit");
 
     private static TextArea fileText;
@@ -67,7 +67,7 @@ public class Menu extends JFrame {
     public static void saveAction() {
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveImage(View.graph);
+                saveImage(View.graphPicture);
             }
         });
     }
