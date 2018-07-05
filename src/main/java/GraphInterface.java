@@ -1,12 +1,12 @@
 public interface GraphInterface {
-    public abstract void addVertex(Vertex vertex);
-    public abstract void deleteVertex(Vertex vertex);
+    void addVertex(Vertex vertex);
+    void deleteVertex(Vertex vertex);
 
-    public abstract void addEdge(VertexEdgeVertex edge);
-    public abstract void deleteEdge(Vertex source, Vertex destination);
+    void addEdge(VertexEdgeVertex edge);
+    void deleteEdge(Vertex source, Vertex destination);
 
 
 
-    public abstract Vertex findNearestVertex(Vertex source);
+    Vertex findNearestVertex(Vertex source);
 
 }

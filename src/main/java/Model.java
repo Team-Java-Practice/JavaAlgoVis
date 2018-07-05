@@ -23,10 +23,7 @@ public class Model {
         AdjacencyList adjacencyList1 = new AdjacencyList(myGraph);
         System.out.println(adjacencyList1);
 
-        myGraph.deleteVertex(new Vertex("C"));
-
-        AdjacencyList adjacencyList2 = new AdjacencyList(myGraph);
-        System.out.println(adjacencyList2);
+        Algo answer = new Algo(myGraph, new Vertex("A"));
     }
 }
 
@@ -78,7 +75,10 @@ class GraphRepresentation implements GraphInterface {
             throw new NoSuchElementException();
         else
             return  index;
+    }
 
+    Vertex getVertexByName(int index){
+        return Verteces.get(index);
     }
 
 }
@@ -127,7 +127,7 @@ class EdgeVertex {
         return length;
     }
 
-    public Vertex getVertex() {
+    public Vertex getDestination() {
         return vertex;
     }
 

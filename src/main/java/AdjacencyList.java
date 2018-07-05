@@ -1,7 +1,12 @@
+import com.sun.javafx.geom.Edge;
+
 import java.util.ArrayList;
 
 public class AdjacencyList {
-    Node[] List = null;
+    private Node[] List = null;
+    GraphRepresentation repr = null;
+    private int vertexNumber;
+
     class Node {
         Vertex RootVertex;
         ArrayList<EdgeVertex> AdjOfRoot = new ArrayList<>();
@@ -12,8 +17,10 @@ public class AdjacencyList {
     }
 
     public AdjacencyList(GraphRepresentation repr) {
-        List = new Node[repr.getVertexNumber()];
-        for (int i = 0; i < repr.getVertexNumber(); i++)
+        this.repr = repr;
+        vertexNumber = repr.getVertexNumber();
+        List = new Node[vertexNumber];
+        for (int i = 0; i < vertexNumber; i++)
             List[i] = new Node(repr.Verteces.get(i));
 
 
@@ -21,6 +28,14 @@ public class AdjacencyList {
             int indexOfNode = repr.getIndexByName(currEdge.getSource());
             List[indexOfNode].AdjOfRoot.add(new EdgeVertex(currEdge.getLength(), currEdge.getDestination()));
         }
+    }
+
+    public ArrayList<EdgeVertex> getAdjVertecesList(Vertex vertex) {
+        return List[repr.getIndexByName(vertex)].AdjOfRoot;
+    }
+
+    public int getVertexNumber(){
+        return vertexNumber;
     }
 
     @Override
