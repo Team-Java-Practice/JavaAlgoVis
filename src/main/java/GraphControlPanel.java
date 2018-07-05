@@ -1,10 +1,15 @@
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
+import javafx.util.Pair;
+import com.google.common.graph.GraphBuilder;
+import com.google.common.graph.MutableGraph;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GraphControlPanel extends JPanel {
     private static Graph graph = null;
@@ -25,6 +30,10 @@ public class GraphControlPanel extends JPanel {
     private static JSpinner toSpinner;
 
     public static int counter = 1;
+    private static int step;
+
+    private static GraphStruct graphStruct = new GraphStruct();
+    private static List<State<Integer>> history = new ArrayList<>();
 
     public GraphControlPanel(final Graph graph) {
         super(null);
@@ -37,40 +46,95 @@ public class GraphControlPanel extends JPanel {
 
         butAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                GraphControlPanel.graph.addNewVertex();
-                counter++;
+                graphStruct.addVertex();
+                graph.paintGraph(graphStruct, history, step, View.textArea );
             }
         });
         butDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 graph.graph.selectChildCell();
-                graph.graph.removeCells();
-                if(counter>1)
-                counter--;
+                Object[] cells = graph.graph.removeCells();
+
+
+                for (int i = 0; i < cells.length; i++) {
+                    if(cells[i] instanceof mxCell){
+
+                        mxCell c = (mxCell)cells[i];
+                        if((Integer)c.getValue()instanceof Integer) {
+
+
+                            int vrtx = (Integer) c.getValue();
+
+                            if (graphStruct.isVertexValue(vrtx)) {
+                                graphStruct.removeVertex(vrtx);
+                            }
+                        }
+
+                    }
+
+                }
 
             }
         }
         );
 
-//HEEEEEEEEEEEELP
+
+
+
         butEdge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int vertexFrom = (Integer) fromSpinner.getValue();
-                int vertexTo = (Integer) toSpinner.getValue();
+                for (Pair<Integer, Integer> integerIntegerPair : graphStruct.getEdges()) {
+                    if (integerIntegerPair.getKey() == fromSpinner.getValue() && integerIntegerPair.getValue() == toSpinner.getValue())
+                        JOptionPane.showMessageDialog(null, "Некорректный ввод(такое ребро уже существует)", "Attention", JOptionPane.ERROR_MESSAGE);
+                }
+                graphStruct.addEdge(fromSpinner, toSpinner);
+
+                graph.paintGraph(graphStruct, history, step, View.textArea );
+            }
+        });
 
 
+        butStartAlgo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MutableGraph<Vertex<Integer>> graph_ = GraphBuilder.<Integer>directed().allowsSelfLoops(true).build();
+                for (int i = 0; i < graphStruct.getNumberOfVertexes(); i++) {
+                    graph_.addNode(new Vertex<>(i));
+                }
 
-                //mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
-                //mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
+                for (Pair<Integer, Integer> edge : graphStruct.getEdges()) {
+                    graph_.putEdge(new Vertex<>(edge.getKey()), new Vertex<>(edge.getValue()));
+                }
 
-                Object cellFrom =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
-                Object cellTo =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
-               // System.out.println(cellFrom.getId());
-               // System.out.println(cellTo.getId());
-               graph.graph.insertEdge(graph.graph.getDefaultParent(), null, "Edge", cellFrom, cellTo);
+                history =Model.dijkstra(graph_, new Vertex<>(1));
+                step = history.size();
+
+                graph.paintGraph(graphStruct, history, step, View.textArea );
+            }
+        });
+
+        butUndo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(step>1 && history!=null) {
+                    step--;
+                    graph.paintGraph(graphStruct, history, step, View.textArea);
+                }
+            }
+        });
+
+        butRedo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(step<history.size()){
+                    step++;
+                    graph.paintGraph(graphStruct, history, step, View.textArea);
+                }
             }
         });
     }
+
+
 
     private void addPanel_2(GridBagConstraints gbc) {
         JPanel dop2Panel = new JPanel();

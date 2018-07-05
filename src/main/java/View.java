@@ -4,15 +4,17 @@ import java.awt.*;
 public class View {
     private static JFrame frame;
     public static final Graph graph = new Graph();
-    private static final JTextArea textArea = new JTextArea(10,18);
+    public static final JTextArea textArea = new JTextArea(10,18);
     private static final GraphControlPanel graphCP = new GraphControlPanel(graph);
     private static Font font = new Font("Verdana", Font.PLAIN, 16);
-    private static JLabel label = new JLabel("          Implementation steps:");
+    private static JLabel label = new JLabel("Steps:");
 
     public static void createGUI() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(Menu.doFileMenu());
         frame.setJMenuBar(menuBar);
@@ -23,7 +25,7 @@ public class View {
         panel.add(graphCP);
         frame.add(panel);
 
-        frame.setSize(900, 700);
+        frame.setSize(1000, 700);
         frame.setVisible(true);
         frame.setResizable(false);
         //frame.pack();
@@ -34,6 +36,8 @@ public class View {
         dopPanel.setLayout(new BoxLayout(dopPanel,BoxLayout.Y_AXIS));
         label.setFont(font);
         dopPanel.add(label);
+        textArea.setPreferredSize(new Dimension(200,400));
+        textArea.setLineWrap(true);
         dopPanel.add(textArea);
 
         JPanel panel = new JPanel();
