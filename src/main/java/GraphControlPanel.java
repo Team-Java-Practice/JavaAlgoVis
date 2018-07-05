@@ -10,15 +10,21 @@ public class GraphControlPanel extends JPanel {
     private static Graph graph = null;
     private static final JButton butAdd = new JButton("Add");
     private static final JButton butDelete = new JButton("Delete");
-    private static final JButton butEdge = new JButton("Create edge");
+    private static final JButton butEdge = new JButton("Add edge");
     private static final JButton butStartV = new JButton("Start Vertex");
     private static final JButton butEndV = new JButton("End Vertex");
     private static final JButton butStartAlgo = new JButton("Start Dijkstra");
 
+    private static final JButton butUndo = new JButton("Undo");
+    private static final JButton butRedo = new JButton("Redo");
+    private static Font font = new Font("Verdana", Font.BOLD, 16);
+    private static JLabel label = new JLabel("Work with graph");
+
+
     private static JSpinner fromSpinner;
     private static JSpinner toSpinner;
 
-    public static int counter = 0;
+    public static int counter = 1;
 
     public GraphControlPanel(final Graph graph) {
         super(null);
@@ -39,23 +45,29 @@ public class GraphControlPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 graph.graph.selectChildCell();
                 graph.graph.removeCells();
+                if(counter>1)
                 counter--;
+
             }
         }
         );
 
+//HEEEEEEEEEEEELP
         butEdge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /*int vertexFrom = (Integer) fromSpinner.getValue();
+                int vertexFrom = (Integer) fromSpinner.getValue();
                 int vertexTo = (Integer) toSpinner.getValue();
 
 
 
-                mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
-                mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
-                System.out.println(cellFrom.getId());
-                System.out.println(cellTo.getId());
-               graph.graph.insertEdge(graph.graph.getDefaultParent(), null, "Edge", cellFrom, cellTo)*/;
+                //mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
+                //mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
+
+                Object cellFrom =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
+                Object cellTo =  ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
+               // System.out.println(cellFrom.getId());
+               // System.out.println(cellTo.getId());
+               graph.graph.insertEdge(graph.graph.getDefaultParent(), null, "Edge", cellFrom, cellTo);
             }
         });
     }
@@ -66,6 +78,8 @@ public class GraphControlPanel extends JPanel {
         dop2Panel.add(butStartV);
         dop2Panel.add(butEndV);
         dop2Panel.add(butStartAlgo);
+        dop2Panel.add(butUndo);
+        dop2Panel.add(butRedo);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -84,13 +98,13 @@ public class GraphControlPanel extends JPanel {
         //спиннер для начальной вершины
         SpinnerModel fromSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
         fromSpinner = new JSpinner(fromSpinnerModel);
-        fromSpinner.setSize(new Dimension(55, 25));
+        fromSpinner.setSize(new Dimension(100, 50));
         fromSpinner.setLocation(10, 155);
 
         //cпиннер для конечной вершины
         SpinnerModel toSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
         toSpinner = new JSpinner(toSpinnerModel);
-        toSpinner.setSize(new Dimension(55, 25));
+        toSpinner.setSize(new Dimension(100, 50));
         toSpinner.setLocation(100, 155);
 
         dop1Panel.add(fromSpinner);
@@ -120,7 +134,8 @@ public class GraphControlPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 0;
 
-        add(new JLabel("Work with graph"), c);
+        label.setFont(font);
+        add(label, c);
         return c;
     }
 }

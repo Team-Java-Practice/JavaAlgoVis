@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class TextArea extends JFrame {
     public JTextArea area1;
+    private static Font font = new Font("Verdana", Font.PLAIN, 16);
 
     private JButton createGr;
 
@@ -14,7 +15,7 @@ public class TextArea extends JFrame {
         // Cоздание многострочных полей
         area1 = new JTextArea(10, 10);
         // Шрифт и табуляция
-        area1.setFont(new Font("Dialog", Font.PLAIN, 14));
+        area1.setFont(font);
         area1.setTabSize(10);
 
         // Параметры переноса слов
@@ -29,6 +30,7 @@ public class TextArea extends JFrame {
        setContentPane(panel);
 
         createGr = new JButton("Create graph");
+
         //расположение кнопки по центру
         createGr.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(createGr);
