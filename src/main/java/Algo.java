@@ -28,7 +28,7 @@ class DijkstraTable {
     public DijkstraTable(GraphRepresentation repr, Vertex source) {
         vertecesNumber = repr.getVertexNumber();
         AdjacencyList AdjList = new AdjacencyList(repr); // список смежности переданного графа.
-        table = new Cell[vertecesNumber][vertecesNumber];
+        table = new Cell[vertecesNumber+1][vertecesNumber];
         for (Cell[] str : table)
             for (int i = 0; i < vertecesNumber; i++)
                 str[i] = new Cell();
@@ -41,12 +41,22 @@ class DijkstraTable {
             Vertex currVertex = getNextVertex(AdjList, table[step]);
             recountLabels(AdjList, currVertex, step);
         }
+
+        System.out.println(this);
+
+        copyPrevStroke(vertecesNumber);
+        for (Cell cell : table[vertecesNumber])
+            cell.isVisited = true;
+
+        System.out.println(this);
     }
 
     private void copyPrevStroke(int step) {
         if (step != 0)
-            for (int i = 0; i < vertecesNumber; i++)
-                table[step][i] = table[step-1][i];
+            for (int i = 0; i < vertecesNumber; i++) {
+                table[step][i].isVisited = table[step - 1][i].isVisited;
+                table[step][i].currentLabel = table[step-1][i].currentLabel;
+            }
     }
 
     private void recountLabels(AdjacencyList adjList, Vertex currVertex, int step) {
@@ -87,9 +97,18 @@ class DijkstraTable {
 
     @Override
     public String toString() {
-        return "DijkstraTable{" +
-                "table=" + Arrays.toString(table) +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < vertecesNumber+1; i++){
+            for (int j = 0; j < vertecesNumber; j++)
+                builder.append(table[i][j]).append(" ");
+            builder.append("\n");
+        }
+//        for (Cell[] str : table) {
+//            for (Cell cell : str)
+//                builder.append(cell).append(" ");
+//            builder.append("\n");
+//        }
+        return new String(builder);
     }
 }
 
