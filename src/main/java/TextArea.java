@@ -12,9 +12,8 @@ public class TextArea extends JFrame {
     public TextArea(String title) {
         super(title);
 
-        // Cоздание многострочных полей
+
         area1 = new JTextArea(10, 10);
-        // Шрифт и табуляция
         area1.setFont(font);
         area1.setTabSize(10);
 
@@ -22,7 +21,6 @@ public class TextArea extends JFrame {
         //setLineWrap(true);
         //setWrapStyleWord(true);
 
-        // Добавим полe в окно
         JPanel panel = new JPanel();
         panel.add(new JScrollPane(area1));
         panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));

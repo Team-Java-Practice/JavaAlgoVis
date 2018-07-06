@@ -1,16 +1,22 @@
+import afu.org.checkerframework.checker.igj.qual.I;
+import com.google.common.graph.*;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
+import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GraphControlPanel extends JPanel {
     private static Graph graph = null;
     private static final JButton butAdd = new JButton("Add");
     private static final JButton butDelete = new JButton("Delete");
-    private static final JButton butEdge = new JButton("Delete edge");
+    private static final JButton butEdge = new JButton("Add edge");
     private static final JButton butStartV = new JButton("Start Vertex");
     private static final JButton butEndV = new JButton("End Vertex");
     private static final JButton butStartAlgo = new JButton("Start Dijkstra");
@@ -23,8 +29,13 @@ public class GraphControlPanel extends JPanel {
 
     private static JSpinner fromSpinner;
     private static JSpinner toSpinner;
+    public static JSpinner weightSpinner;
 
     public static int counter = 1;
+    public static int step;
+
+    private static GraphStruct graphStruct = new GraphStruct();
+    private static List<State<Integer>> history = new ArrayList<>();
 
     public GraphControlPanel(final Graph graph) {
         super(null);
@@ -37,34 +48,128 @@ public class GraphControlPanel extends JPanel {
 
         butAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                GraphControlPanel.graph.addNewVertex();
-                counter++;
+                graphStruct.addVertex();
+                graph.paintGraph(graphStruct, history, step, View.textArea );
+               // graph.paintGraph(graphStruct, history, step );
+
             }
         });
         butDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 graph.graph.selectChildCell();
-                graph.graph.removeCells();
-                counter--;
+                Object[] cells = graph.graph.removeCells();
+
+
+                for (int i = 0; i < cells.length; i++) {
+                    if(cells[i] instanceof mxCell){
+
+                        mxCell c = (mxCell)cells[i];
+                        if((Integer)c.getValue()instanceof Integer) {
+
+
+                            int vrtx = (Integer) c.getValue();
+
+                            if (graphStruct.isVertexValue(vrtx)) {
+                                graphStruct.removeVertex(vrtx);
+                            }
+                        }
+
+                    }
+
+                }
+
             }
         }
         );
 
+
+
+//
+//        butEdge.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                for (Pair<Integer, Integer> integerIntegerPair : graphStruct.getEdges()) {
+//                    if (integerIntegerPair.getKey() == fromSpinner.getValue() && integerIntegerPair.getValue() == toSpinner.getValue())
+//                        JOptionPane.showMessageDialog(null, "Ребро уже существует", "Attention", JOptionPane.ERROR_MESSAGE);
+//                }
+//                graphStruct.addEdge(fromSpinner, toSpinner,weight);
+//
+//                graph.paintGraph(graphStruct, history, step, View.textArea );
+//            }
+//        });
+
+
         butEdge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /*int vertexFrom = (Integer) fromSpinner.getValue();
-                int vertexTo = (Integer) toSpinner.getValue();
+                for (Map.Entry<Pair<Integer,Integer>, Integer> entry : graphStruct.getEdges().entrySet()) {
+                    if (entry.getKey().getKey() == fromSpinner.getValue() && entry.getKey().getValue() == toSpinner.getValue())
+                        JOptionPane.showMessageDialog(null, "Ребро уже существует", "Attention", JOptionPane.ERROR_MESSAGE);
+                }
+                graphStruct.addEdge(fromSpinner, toSpinner,weightSpinner);
+
+                graph.paintGraph(graphStruct, history, step, View.textArea );
+            }
+        });
 
 
+        butStartAlgo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MutableGraph<Vertex<Integer>> graph_ = GraphBuilder.<Integer>directed().allowsSelfLoops(true).build();
 
-                mxCell cellFrom = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexFrom+"");
-                mxCell cellTo = (mxCell) ((mxGraphModel)graph.graph.getModel()).getCell(vertexTo+"");
-                System.out.println(cellFrom.getId());
-                System.out.println(cellTo.getId());
-               graph.graph.insertEdge(graph.graph.getDefaultParent(), null, "Edge", cellFrom, cellTo)*/;
+                MutableValueGraph<Vertex<Integer>, Integer> gr = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
+                for (int i = 0; i < graphStruct.getNumberOfVertexes(); i++) {
+                    graph_.addNode(new Vertex<>(i));
+                }
+
+                for (Map.Entry<Pair<Integer, Integer>, Integer> edge : graphStruct.getEdges().entrySet()) {
+                    graph_.putEdge(new Vertex<>(edge.getKey().getKey()), new Vertex<>(edge.getKey().getValue()));
+                }
+
+
+                for (int i = 0; i < graphStruct.getNumberOfVertexes(); i++) {
+                    gr.addNode(new Vertex<>(i));
+                }
+
+                for (Map.Entry<Pair<Integer, Integer>, Integer> edge: graphStruct.getEdges().entrySet()) {
+                    gr.putEdgeValue(new Vertex<>(edge.getKey().getKey()), new Vertex<>(edge.getKey().getValue()), edge.getValue());
+                }
+
+
+                history =Model.dijkstra(graph_, new Vertex<>(1));
+                step = 1;
+
+                graph.paintGraph(graphStruct, history, step, View.textArea );
+            }
+        });
+
+        butUndo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(step>1 && history!=null) {
+                    step--;
+                    graph.paintGraph(graphStruct, history, step, View.textArea);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Первый шаг алгоритма", "Attention", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        butRedo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(step<history.size()){
+                    step++;
+                    graph.paintGraph(graphStruct, history, step, View.textArea);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Алгоритм закончил работу", "Attention", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
+
+
 
     private void addPanel_2(GridBagConstraints gbc) {
         JPanel dop2Panel = new JPanel();
@@ -99,10 +204,17 @@ public class GraphControlPanel extends JPanel {
         SpinnerModel toSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
         toSpinner = new JSpinner(toSpinnerModel);
         toSpinner.setSize(new Dimension(100, 50));
-        toSpinner.setLocation(100, 155);
+        toSpinner.setLocation(10, 155);
+
+        //cпиннер для веса
+        SpinnerModel weightSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
+        weightSpinner = new JSpinner(weightSpinnerModel);
+        weightSpinner.setSize(new Dimension(100, 50));
+        weightSpinner.setLocation(10, 155);
 
         dop1Panel.add(fromSpinner);
         dop1Panel.add(toSpinner);
+        dop1Panel.add(weightSpinner);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
