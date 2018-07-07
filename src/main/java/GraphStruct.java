@@ -9,7 +9,6 @@ import java.util.Map;
 public class GraphStruct {
     private int numberOfVertexes;
 
-   // private List<Pair<Integer, Integer>> edges = new ArrayList<>();
     private List<Vertex<Integer>> listOfVertexes = new ArrayList<>();
 
     private Map<Pair<Integer,Integer>, Integer> edges = new HashMap<>();
@@ -35,18 +34,15 @@ public class GraphStruct {
 
         for(Map.Entry<Pair<Integer, Integer>, Integer> pair: map.entrySet()){
             if(pair.getKey().getValue().equals(vrtx)) {
-                edges.remove(pair);
+                edges.remove(pair.getKey());
             }
-
         }
 
         for(Map.Entry<Pair<Integer, Integer>, Integer> pair: map.entrySet()){
             if(pair.getKey().getKey().equals(vrtx)) {
-                edges.remove(pair);
+                edges.remove(pair.getKey());
             }
-
         }
-
     }
 
     public boolean isVertexValue(int value){
@@ -64,6 +60,9 @@ public class GraphStruct {
 
     }
 
+    public void addEdge(int from, int to, int weight) {
+        edges.put(new Pair<Integer, Integer>(from, to),weight);
+    }
 
     public ArrayList<Pair<Double, Double>> getVertexes() {  // размещения вершин на поле для основного графа
         ArrayList<Pair<Double, Double>> points = new ArrayList<>();

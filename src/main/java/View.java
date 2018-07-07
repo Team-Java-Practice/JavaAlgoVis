@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View {
-    private static JFrame frame;
+    public static JFrame frame;
     public static final Graph graph = new Graph();
     public static final JTextArea textArea = new JTextArea(10,18);
     private static final GraphControlPanel graphCP = new GraphControlPanel(graph);

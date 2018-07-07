@@ -2,14 +2,23 @@ import java.util.Objects;
 
 public class Vertex<T> {
     private T value;
+    private int path;
 
     private int inTime = Integer.MAX_VALUE;
     private int outTime = Integer.MAX_VALUE;
 
     public Vertex(T value) {
         this.value = value;
+        path = Integer.MAX_VALUE;
     }
 
+    public int getPath() {
+        return path;
+    }
+
+    public void setPath(int path) {
+        this.path = path;
+    }
 
     public T getValue() {
         return value;

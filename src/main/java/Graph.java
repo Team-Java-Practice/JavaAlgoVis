@@ -75,8 +75,9 @@ class Graph extends JPanel {
             State<Integer> stepOne = history.get(j);
             mxCell cell = (mxCell) vertexes.get(stepOne.getVertex().getValue() - 1);
             cell.setValue(history.get(j).getVertex().getValue().toString() +
-                    "\n" +"Way "+ history.get(j).getVertex().getInTime());
-            if (stepOne.getVertex().getInTime() != Integer.MAX_VALUE && stepOne.getVertex().getOutTime() == Integer.MAX_VALUE) {
+                    "\n" +"Way "+ history.get(j).getVertex().getPath());
+            if (stepOne.getVertex().getInTime() != Integer.MAX_VALUE && stepOne.getVertex().getOutTime() == Integer.MAX_VALUE
+                    ) {
                 graph.setCellStyle("shape=ellipse;strokeColor=red;fillColor=blue", new Object[]{cell});
             } else if (stepOne.getVertex().getInTime() != Integer.MAX_VALUE && stepOne.getVertex().getOutTime() != Integer.MAX_VALUE) {
                 graph.setCellStyle("shape=ellipse;strokeColor=#ff0000", new Object[]{cell});
