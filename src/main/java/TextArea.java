@@ -1,7 +1,17 @@
+import javafx.util.Pair;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public class TextArea extends JFrame {
     public JTextArea area1;
@@ -12,9 +22,7 @@ public class TextArea extends JFrame {
     public TextArea(String title) {
         super(title);
 
-        // Cоздание многострочных полей
         area1 = new JTextArea(10, 10);
-        // Шрифт и табуляция
         area1.setFont(font);
         area1.setTabSize(10);
 
@@ -29,7 +37,7 @@ public class TextArea extends JFrame {
 
        setContentPane(panel);
 
-        createGr = new JButton("Create graphPicture");
+        createGr = new JButton("Create graph");
 
         //расположение кнопки по центру
         createGr.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -37,15 +45,11 @@ public class TextArea extends JFrame {
 
         createGr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /*todo*/
             }
         });
 
         // Выводим окно на экран
         setSize(250, 300);
         setVisible(true);
-
     }
-
-
 }

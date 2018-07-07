@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -5,19 +7,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public class Menu extends JFrame {
     private static Font font = new Font("Verdana", Font.ITALIC, 16);
     private static JMenu fileMenu = new JMenu("File");
-    private static JMenu createGraph = new JMenu("Create graphPicture");
+    private static JMenu createGraph = new JMenu("Create graph");
     private static JMenuItem createList = new JMenuItem("List view");
-    private static JMenuItem createMatrix = new JMenuItem("Matrix view");
 
-    private static JMenuItem openItem = new JMenuItem("Open graphPicture");
-    private static JMenuItem saveItem = new JMenuItem("Save graphPicture");
+    private static JMenuItem openItem = new JMenuItem("Open graph");
+    private static JMenuItem saveItem = new JMenuItem("Save graph");
     private static JMenuItem exitItem = new JMenuItem("Exit");
 
     private static TextArea fileText;
+    private static GraphStruct graphStruct = new GraphStruct();
+    private static Graph graph= new Graph();
+    private static List<State<Integer>> history = new ArrayList<>();
+    private static int step;
 
     public static JMenu doFileMenu() {
         fileMenu.setFont(font);
@@ -29,13 +40,8 @@ public class Menu extends JFrame {
         createGraph.add(createList);
         createList();
 
-        createMatrix.setFont(font);
-        createGraph.add(createMatrix);
-        createMatrix();
-
         openItem.setFont(font);
         fileMenu.add(openItem);
-
         openAction();
 
         saveItem.setFont(font);
@@ -56,18 +62,10 @@ public class Menu extends JFrame {
         });
     }
 
-    private static void createMatrix() {
-        createMatrix.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TextArea textArea = new TextArea("Matrix");
-            }
-        });
-    }
-
     public static void saveAction() {
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveImage(View.graphPicture);
+                saveImage(View.graph);
             }
         });
     }
@@ -84,17 +82,15 @@ public class Menu extends JFrame {
         openItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                JFileChooser chooser = new JFileChooser();
-                int returnVal = chooser.showDialog(null, "Открыть файл");
+                JFileChooser fileChooser = new JFileChooser();
+                int returnVal = fileChooser.showDialog(null, "Открыть файл");
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    String str = chooser.getSelectedFile().getPath();
-                    System.out.println(str);
+                    String string = fileChooser.getSelectedFile().getPath();
                     fileText = new TextArea("Open");
-                    fileText.area1.append(read(str));
-                }
+                    fileText.area1.append(read(string));
+                    }
             }
         });
-
     }
 
     public static String read(String fileName) {
