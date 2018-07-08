@@ -24,10 +24,6 @@ public class Vertex<T> {
         return value;
     }
 
-    public void setValue(T value) {
-        this.value = value;
-    }
-
     public int getInTime() {
         return inTime;
     }

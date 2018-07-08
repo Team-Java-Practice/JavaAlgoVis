@@ -27,7 +27,6 @@ public class Model {
             current.setInTime(time);
             i++;
 
-            //Set<Vertex<T>> vertexes = new HashSet<>();
             Map<Vertex<T>, Integer> vrtx = new HashMap<>();
 
             Set<EndpointPair<Vertex<T>>> edges = graph.incidentEdges(current);
@@ -58,7 +57,6 @@ public class Model {
 
     private static <T> void saveToHistory(List<State<T>> history, Vertex<T> current, String s) {
         Vertex<T> toHistory = copy(current);
-        //System.out.println(toHistory.getValue() + " " + toHistory.getPath());
         history.add(new State<>(String.format(s + "\n", toHistory), toHistory));
     }
 

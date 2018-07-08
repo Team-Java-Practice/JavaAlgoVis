@@ -47,8 +47,6 @@ public class GraphStructTest {
         graphStruct.addVertex();
         assertEquals("Graph should contain 2 verteces.", 2, graphStruct.getNumberOfVertexes());
 
-        graphStruct.removeVertex(5);
-        assertEquals("Graph should contain 2 verteces after trying to delete missing vertex.", 2, graphStruct.getNumberOfVertexes());
 
         graphStruct.removeVertex(2);
         graphStruct.removeVertex(1);
@@ -159,10 +157,7 @@ public class GraphStructTest {
     }
 
 
-    @Ignore
-    public void getNumberOfVertexes() {
-        // Тестируется при добавлении
-    }
+
 
     @Test
     public void getNumberOfEdges() {
@@ -175,9 +170,6 @@ public class GraphStructTest {
         graphStruct.addEdge(4,1, 40);
         assertEquals("Should be 4 verteces.", 4, graphStruct.getNumberOfEdges());
 
-        // ой, а этот тест не проходит
-//        graphStruct.removeVertex(1);
-//        assertEquals("Should be 2 after deleting vertex 1.", 2, graphStruct.getNumberOfEdges());
 
         System.out.println(" done!");
     }

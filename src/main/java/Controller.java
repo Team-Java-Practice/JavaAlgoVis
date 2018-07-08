@@ -1,11 +1,4 @@
 public class Controller {
-    private View view;
-    private Model model;
-
-    Controller(Model model, View view) {
-        this.model = model;
-        this.view = view;
-    }
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

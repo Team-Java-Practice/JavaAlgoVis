@@ -64,7 +64,7 @@ public class GraphStruct {
     public void addEdge(int from, int to, int weight) {
         if (weight < 1)
             throw new NumberFormatException("weight must be natural");
-        edges.put(new Pair<Integer, Integer>(from, to),weight);
+        edges.put(new Pair<>(from, to),weight);
     }
 
     public ArrayList<Pair<Double, Double>> getVertexes() {  // размещения вершин на поле для основного графа
@@ -96,11 +96,7 @@ public class GraphStruct {
     }
 
     public void clear() {
-//        old
-//        numberOfVertexes = 0;
-//        edges = new HashMap<>();
 
-//        new
         edges = new HashMap<>();
         listOfVertexes = new ArrayList<>();
         numberOfVertexes = listOfVertexes.size();

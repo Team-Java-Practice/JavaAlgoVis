@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,13 +9,16 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Menu extends JFrame {
     private static Font font = new Font("Verdana", Font.ITALIC, 16);
     private static JMenu fileMenu = new JMenu("File");
 
-    private static JMenuItem saveItem = new JMenuItem("Save graph");
+    private static JMenuItem saveItem = new JMenuItem("Save graph(.jpeg)");
     private static JMenuItem exitItem = new JMenuItem("Exit");
+
+    private static GraphStruct graphStruct = new GraphStruct();
 
     public static JMenu doFileMenu() {
         fileMenu.setFont(font);
@@ -36,6 +41,7 @@ public class Menu extends JFrame {
         });
     }
 
+
     public static void exitAction() {
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -56,4 +62,6 @@ public class Menu extends JFrame {
             io.printStackTrace();
         }
     }
+
+
 }

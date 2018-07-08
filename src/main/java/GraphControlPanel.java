@@ -53,6 +53,12 @@ public class GraphControlPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 graphStruct.addVertex();
                 graph.paintGraph(graphStruct, history, step, View.textArea);
+
+                butStartAlgo.setEnabled(true);
+                butStartAlgo.setEnabled(true);
+                butClearField.setEnabled(true);
+                butDelete.setEnabled(true);
+                butEdge.setEnabled(true);
             }
         });
 
@@ -90,35 +96,58 @@ public class GraphControlPanel extends JPanel {
                 history = new ArrayList<>();
                 step = 0;
                 graph.paintGraph(graphStruct, history, step, View.textArea);
-                View.frame.repaint();
+
+                butDelete.setEnabled(false);
+                butEdge.setEnabled(false);
+                butStartAlgo.setEnabled(false);
+
+                butAdd.setEnabled(true);
+                butUndo.setEnabled(true);
+                butRedo.setEnabled(true);
+
             }
         });
 
         butEdge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (Map.Entry<Pair<Integer,Integer>, Integer> entry : graphStruct.getEdges().entrySet()) {
-                    if (entry.getKey().getKey() == fromSpinner.getValue() && entry.getKey().getValue() == toSpinner.getValue())
-                        JOptionPane.showMessageDialog(null, "Ребро уже существует", "Attention", JOptionPane.ERROR_MESSAGE);
+                boolean firstVertex = false;
+                boolean secondVertex = false;
+                for (Vertex<Integer> list :  graphStruct.getListOfVertexes()) {
+                    if(list.getValue() == fromSpinner.getValue()){
+                        firstVertex=true;
+                    }
+                    if(list.getValue() == toSpinner.getValue()) {
+                        secondVertex = true;
+                    }
                 }
-                graphStruct.addEdge(fromSpinner, toSpinner,weightSpinner);
+                if(firstVertex && secondVertex){
+                    for (Map.Entry<Pair<Integer,Integer>, Integer> entry : graphStruct.getEdges().entrySet()) {
+                        if (entry.getKey().getKey() == fromSpinner.getValue() && entry.getKey().getValue() == toSpinner.getValue())
+                            JOptionPane.showMessageDialog(null, "Ребро уже существует", "Attention", JOptionPane.ERROR_MESSAGE);
+                    }
+                    graphStruct.addEdge(fromSpinner, toSpinner,weightSpinner);
 
-                graph.paintGraph(graphStruct, history, step, View.textArea );
+                    graph.paintGraph(graphStruct, history, step, View.textArea );
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Введите другие вершины", "Attention", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
         });
 
         butStartAlgo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MutableGraph<Vertex<Integer>> graph_ = GraphBuilder.<Integer>directed().allowsSelfLoops(true).build();
+                butRedo.setEnabled(true);
+                butUndo.setEnabled(true);
+
+                butDelete.setEnabled(false);
+                butEdge.setEnabled(false);
+                butAdd.setEnabled(false);
+
+
                 MutableValueGraph<Vertex<Integer>, Integer> gr = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
-
-                for (int i = 0; i < graphStruct.getNumberOfVertexes(); i++) {
-                    graph_.addNode(new Vertex<>(i));
-                }
-
-                for (Map.Entry<Pair<Integer, Integer>, Integer> edge : graphStruct.getEdges().entrySet()) {
-                    graph_.putEdge(new Vertex<>(edge.getKey().getKey()), new Vertex<>(edge.getKey().getValue()));
-                }
 
                 for (int i = 0; i < graphStruct.getNumberOfVertexes(); i++) {
                     gr.addNode(new Vertex<>(i));
@@ -132,6 +161,7 @@ public class GraphControlPanel extends JPanel {
                 step = 1;
 
                 graph.paintGraph(graphStruct, history, step, View.textArea);
+
             }
         });
 
@@ -162,6 +192,9 @@ public class GraphControlPanel extends JPanel {
         butOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+                graphStruct.clear();
                 JFileChooser fileChooser = new JFileChooser();
                 int returnVal = fileChooser.showDialog(null, "Открыть файл");
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -202,6 +235,11 @@ public class GraphControlPanel extends JPanel {
                     }
                 }
                 graph.paintGraph(graphStruct, history, step, View.textArea);
+                butStartAlgo.setEnabled(true);
+                butStartAlgo.setEnabled(true);
+                butClearField.setEnabled(true);
+                butDelete.setEnabled(true);
+                butEdge.setEnabled(true);
             }
         });
     }
@@ -214,6 +252,12 @@ public class GraphControlPanel extends JPanel {
         dop2Panel.add(butStartAlgo);
         dop2Panel.add(butUndo);
         dop2Panel.add(butRedo);
+
+        butClearField.setEnabled(false);
+        butUndo.setEnabled(false);
+        butRedo.setEnabled(false);
+        butStartAlgo.setEnabled(false);
+
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -228,6 +272,10 @@ public class GraphControlPanel extends JPanel {
         dop1Panel.add(butAdd);
         dop1Panel.add(butDelete);
         dop1Panel.add(butEdge);
+
+        butDelete.setEnabled(false);
+        butEdge.setEnabled(false);
+
 
         //спиннер для начальной вершины
         SpinnerModel fromSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
