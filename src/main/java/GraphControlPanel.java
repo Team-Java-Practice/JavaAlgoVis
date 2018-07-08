@@ -226,6 +226,7 @@ public class GraphControlPanel extends JPanel {
         fromSpinner = new JSpinner(fromSpinnerModel);
         fromSpinner.setSize(new Dimension(100, 50));
         fromSpinner.setLocation(10, 155);
+        fromSpinner.setToolTipText("from");
 
         //cпиннер для конечной вершины
         SpinnerModel toSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
@@ -239,9 +240,26 @@ public class GraphControlPanel extends JPanel {
         weightSpinner.setSize(new Dimension(100, 50));
         weightSpinner.setLocation(10, 155);
 
-        dop1Panel.add(fromSpinner);
-        dop1Panel.add(toSpinner);
-        dop1Panel.add(weightSpinner);
+        JPanel panelFromSp = new JPanel();
+        panelFromSp.setLayout(new BoxLayout(panelFromSp,BoxLayout.Y_AXIS));
+        panelFromSp.add(new JLabel("from"));
+        panelFromSp.add(fromSpinner);
+
+        JPanel panelToSp = new JPanel();
+        panelToSp.setLayout(new BoxLayout(panelToSp,BoxLayout.Y_AXIS));
+        panelToSp.add(new JLabel("to"));
+        panelToSp.add(toSpinner);
+
+        JPanel panelWeightSp = new JPanel();
+        panelWeightSp.setLayout(new BoxLayout(panelWeightSp,BoxLayout.Y_AXIS));
+        panelWeightSp.add(new JLabel("weight"));
+        panelWeightSp.add(weightSpinner);
+
+
+
+        dop1Panel.add(panelFromSp);
+        dop1Panel.add(panelToSp);
+        dop1Panel.add(panelWeightSp);
 
         gbc.gridx = 1;
         gbc.gridy = 1;

@@ -23,7 +23,6 @@ public class GraphStruct {
             return;
         }
 
-//        Map<Pair<Integer, Integer>, Integer> map = new HashMap<>(edges);
         for (Vertex vertex: listOfVertexes) {
             if(vertex.getValue().equals(vrtx)) {
                 listOfVertexes.remove(vertex);
@@ -41,7 +40,6 @@ public class GraphStruct {
                         edges.remove(pair.getKey());
                     }
                 }
-
                 break;
             }
         }
@@ -55,10 +53,8 @@ public class GraphStruct {
         return false;
     }
 
-
     public void addEdge(JSpinner from, JSpinner to, JSpinner weight) {
         edges.put(new Pair<Integer, Integer>((Integer) from.getValue(), (Integer) to.getValue()),(Integer) weight.getValue());
-
     }
 
     public void addEdge(int from, int to, int weight) {
@@ -90,7 +86,6 @@ public class GraphStruct {
     public Map<Pair<Integer, Integer>, Integer> getEdges() {
         return edges;
     }
-
 
     public List<Vertex<Integer>> getListOfVertexes() {
         return listOfVertexes;

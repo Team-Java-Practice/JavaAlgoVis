@@ -28,7 +28,6 @@ public class View {
         frame.setSize(1200, 700);
         frame.setVisible(true);
         frame.setResizable(false);
-        //frame.pack();
     }
 
     public static JPanel addComponentsToPane(){

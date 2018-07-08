@@ -11,7 +11,6 @@ public class Model {
 
         LinkedList<Vertex<T>> queue = new LinkedList<>();
 
-
         queue.add(startVertex);
         startVertex.setPath(0);
         startVertex.setInTime(0);
@@ -25,7 +24,7 @@ public class Model {
             Vertex<T> current = getmin(queue);
 
             System.out.println("Начинам вершина " + current.getValue() + " " + current.getPath());
-            saveToHistory(history, current, "Шаг "+ i +": %s");
+            saveToHistory(history, current, "Шаг "+ i +": текущая вершина %s");
             current.setInTime(time);
             i++;
 
@@ -49,12 +48,12 @@ public class Model {
                     }
                     queue.add(pair.getKey());
                     System.out.println("Вершина "+pair.getKey().getValue()+" в очередь со значание "+pair.getKey().getPath());
-                    saveToHistory(history, pair.getKey(), "Шаг " + i + ": %s");
+                    saveToHistory(history, pair.getKey(), "Шаг " + i + ": проверяется вершина %s");
                     i++;
                 }
             }
             queue.remove(current);
-            saveToHistory(history, current, "Шаг "+i+"(выход из вершины): %s");
+            saveToHistory(history, current, "Шаг "+i+": выход из вершины %s");
             i++;
         }
 
@@ -86,5 +85,3 @@ public class Model {
         return min;
     }
 }
-
-
