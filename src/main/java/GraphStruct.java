@@ -19,35 +19,36 @@ public class GraphStruct {
     }
 
     public void removeVertex(int vrtx){
-        if (this.numberOfVertexes !=1) {
-            this.numberOfVertexes--;
+        if (this.numberOfVertexes == 0) {
+            return;
         }
 
-        Map<Pair<Integer, Integer>, Integer> map = new HashMap<>(edges);
-        for (Vertex vertex: listOfVertexes
-             ) {
+//        Map<Pair<Integer, Integer>, Integer> map = new HashMap<>(edges);
+        for (Vertex vertex: listOfVertexes) {
             if(vertex.getValue().equals(vrtx)) {
                 listOfVertexes.remove(vertex);
+                this.numberOfVertexes--;
+
+                for(Map.Entry<Pair<Integer, Integer>, Integer> pair : edges.entrySet()){
+                    if(pair.getKey().getValue().equals(vrtx)) {
+                        System.out.println("Сравниваем с " + pair.getKey().getValue());
+                        edges.remove(pair.getKey());
+                    }
+                }
+
+                for(Map.Entry<Pair<Integer, Integer>, Integer> pair : edges.entrySet()){
+                    if(pair.getKey().getKey().equals(vrtx)) {
+                        edges.remove(pair.getKey());
+                    }
+                }
+
                 break;
-            }
-        }
-
-        for(Map.Entry<Pair<Integer, Integer>, Integer> pair: map.entrySet()){
-            if(pair.getKey().getValue().equals(vrtx)) {
-                edges.remove(pair.getKey());
-            }
-        }
-
-        for(Map.Entry<Pair<Integer, Integer>, Integer> pair: map.entrySet()){
-            if(pair.getKey().getKey().equals(vrtx)) {
-                edges.remove(pair.getKey());
             }
         }
     }
 
-    public boolean isVertexValue(int value){
-        for (Vertex vertex: listOfVertexes
-             ) {
+    public boolean checkValue(int value){
+        for (Vertex vertex: listOfVertexes) {
             if(vertex.getValue().equals(value))
                 return true;
         }
@@ -61,6 +62,8 @@ public class GraphStruct {
     }
 
     public void addEdge(int from, int to, int weight) {
+        if (weight < 1)
+            throw new NumberFormatException("weight must be natural");
         edges.put(new Pair<Integer, Integer>(from, to),weight);
     }
 
@@ -80,6 +83,10 @@ public class GraphStruct {
         return numberOfVertexes;
     }
 
+    public int getNumberOfEdges(){
+        return edges.size();
+    }
+
     public Map<Pair<Integer, Integer>, Integer> getEdges() {
         return edges;
     }
@@ -90,7 +97,13 @@ public class GraphStruct {
     }
 
     public void clear() {
-        numberOfVertexes = 0;
+//        old
+//        numberOfVertexes = 0;
+//        edges = new HashMap<>();
+
+//        new
         edges = new HashMap<>();
+        listOfVertexes = new ArrayList<>();
+        numberOfVertexes = listOfVertexes.size();
     }
 }

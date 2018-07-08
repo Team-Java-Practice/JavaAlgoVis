@@ -1,4 +1,3 @@
-import afu.org.checkerframework.checker.igj.qual.I;
 import com.google.common.graph.*;
 import com.mxgraph.model.mxCell;
 import javafx.util.Pair;
@@ -67,7 +66,7 @@ public class GraphControlPanel extends JPanel {
                         mxCell c = (mxCell) cells[i];
                         if ((Integer) c.getValue() instanceof Integer) {
                             int vrtx = (Integer) c.getValue();
-                            if (graphStruct.isVertexValue(vrtx)) {
+                            if (graphStruct.checkValue(vrtx)) {
                                 graphStruct.removeVertex(vrtx);
                             }
                         }
@@ -103,8 +102,8 @@ public class GraphControlPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MutableGraph<Vertex<Integer>> graph_ = GraphBuilder.<Integer>directed().allowsSelfLoops(true).build();
-
                 MutableValueGraph<Vertex<Integer>, Integer> gr = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
+
                 for (int i = 0; i < graphStruct.getNumberOfVertexes(); i++) {
                     graph_.addNode(new Vertex<>(i));
                 }

@@ -1,5 +1,4 @@
 import com.google.common.graph.EndpointPair;
-import com.google.common.graph.Graph;
 import com.google.common.graph.ValueGraph;
 
 import java.util.*;
