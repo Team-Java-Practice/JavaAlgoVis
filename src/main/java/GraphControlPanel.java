@@ -61,16 +61,24 @@ public class GraphControlPanel extends JPanel {
                 graph.graph.selectChildCell();
                 Object[] cells = graph.graph.removeCells();
 
-                for (int i = 0; i < cells.length; i++) {
-                    if (cells[i] instanceof mxCell) {
-                        mxCell c = (mxCell) cells[i];
-                        if ((Integer) c.getValue() instanceof Integer) {
-                            int vrtx = (Integer) c.getValue();
-                            if (graphStruct.checkValue(vrtx)) {
-                                graphStruct.removeVertex(vrtx);
+
+                if (cells.length>0) {
+                    for (int i = 0; i < 1; i++) {
+
+                        if (cells[i] instanceof mxCell) {
+                            mxCell c = (mxCell) cells[i];
+                            System.out.println(c.getValue()+" i="+i);
+                            if ((Integer) c.getValue() != null) {
+                                int vrtx = (Integer) c.getValue();
+                                if (graphStruct.checkValue(vrtx)) {
+                                    graphStruct.removeVertex(vrtx);
+                                }
                             }
                         }
                     }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Вершин больше нет", "Attention", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
