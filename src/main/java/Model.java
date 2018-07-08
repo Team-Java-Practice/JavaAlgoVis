@@ -23,7 +23,7 @@ public class Model {
             time++;
             Vertex<T> current = getmin(queue);
 
-            System.out.println("Начинам вершина " + current.getValue() + " " + current.getPath());
+            System.out.println("Начинаем с вершинаы " + current.getValue() + ", " + current.getPath());
             saveToHistory(history, current, "Шаг "+ i +": текущая вершина %s");
             current.setInTime(time);
             i++;
@@ -39,7 +39,12 @@ public class Model {
             }
 
             for (Map.Entry<Vertex<T>, Integer> pair: vrtx.entrySet()) {
-                System.out.println("Проверяем Вершина "+pair.getKey().getValue()+" значение " +pair.getKey().getPath() );
+                System.out.print("Проверяем Вершина "+pair.getKey().getValue()+" значение ");
+                if (pair.getKey().getPath() == Integer.MAX_VALUE)
+                    System.out.println("∞");
+                else
+                    System.out.println(pair.getKey().getPath());
+
                 if(current.getPath()+pair.getValue()<pair.getKey().getPath()){
                     pair.getKey().setPath(current.getPath()+pair.getValue());
                     if(queue.contains(pair.getKey())) {

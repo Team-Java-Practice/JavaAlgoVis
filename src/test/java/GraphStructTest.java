@@ -24,11 +24,13 @@ public class GraphStructTest {
         System.out.print("    Test addVertex...");
 
         GraphStruct graphStruct = new GraphStruct();
-        assertEquals("New graph should contain 0 verteces after remove.", 0, graphStruct.getNumberOfVertexes());
+        assertEquals("New graph should contain 0 verteces after remove.",
+                0, graphStruct.getNumberOfVertexes());
 
         graphStruct.addVertex();
         graphStruct.addVertex();
-        assertEquals("Graph should contain 2 verteces.", 2, graphStruct.getNumberOfVertexes());
+        assertEquals("Graph should contain 2 verteces.",
+                2, graphStruct.getNumberOfVertexes());
 
         System.out.println(" done!");
     }

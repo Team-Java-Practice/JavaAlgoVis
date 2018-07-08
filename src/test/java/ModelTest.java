@@ -43,6 +43,22 @@ public class ModelTest {
         List<State<Integer>> history = new ArrayList<>();
         history = Model.dijkstra(gr, new Vertex<>(1));
 
+        assertEquals("Check step 1", new Vertex(1), history.get(0).getVertex());
+        assertEquals("Check step 2", new Vertex(2), history.get(1).getVertex());
+        assertEquals("Check step 3", new Vertex(4), history.get(2).getVertex());
+        assertEquals("Check step 4", new Vertex(1), history.get(3).getVertex());
+        assertEquals("Check step 5", new Vertex(2), history.get(4).getVertex());
+        assertEquals("Check step 6", new Vertex(3), history.get(5).getVertex());
+        assertEquals("Check step 7", new Vertex(2), history.get(6).getVertex());
+        assertEquals("Check step 8", new Vertex(4), history.get(7).getVertex());
+        assertEquals("Check step 9", new Vertex(5), history.get(8).getVertex());
+        assertEquals("Check step 10", new Vertex(4), history.get(9).getVertex());
+        assertEquals("Check step 11", new Vertex(3), history.get(10).getVertex());
+        assertEquals("Check step 12", new Vertex(2), history.get(11).getVertex());
+        // ...
+        assertEquals("Check step 19", new Vertex(2), history.get(18).getVertex());
+        assertEquals("Check step 20", new Vertex(5), history.get(19).getVertex());
+        assertEquals("Check step 21", new Vertex(5), history.get(20).getVertex());
 
         assertEquals("Test", 21, history.size());
     }
