@@ -1,3 +1,4 @@
+import afu.org.checkerframework.checker.igj.qual.I;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -15,33 +16,36 @@ public class GraphStruct {
 
     public void addVertex() {
         this.numberOfVertexes++;
-        listOfVertexes.add(new Vertex<Integer>(numberOfVertexes));
+        listOfVertexes.add(new Vertex<>(numberOfVertexes));
     }
 
     public void removeVertex(int vrtx){
-        if (this.numberOfVertexes == 0) {
-            return;
+        if (this.numberOfVertexes !=0) {
+            this.numberOfVertexes--;
         }
 
-        for (Vertex vertex: listOfVertexes) {
+        Map<Pair<Integer, Integer>, Integer> map = new HashMap<>(edges);
+        for (Vertex vertex: listOfVertexes
+                ) {
             if(vertex.getValue().equals(vrtx)) {
                 listOfVertexes.remove(vertex);
-                this.numberOfVertexes--;
 
-                for(Map.Entry<Pair<Integer, Integer>, Integer> pair : edges.entrySet()){
-                    if(pair.getKey().getValue().equals(vrtx)) {
-                        System.out.println("Сравниваем с " + pair.getKey().getValue());
-                        edges.remove(pair.getKey());
-                    }
-                }
-
-                for(Map.Entry<Pair<Integer, Integer>, Integer> pair : edges.entrySet()){
-                    if(pair.getKey().getKey().equals(vrtx)) {
-                        edges.remove(pair.getKey());
-                    }
-                }
                 break;
             }
+        }
+
+        for(Map.Entry<Pair<Integer, Integer>, Integer> pair: map.entrySet()){
+            if(pair.getKey().getValue().equals(vrtx)) {
+                edges.remove(pair.getKey());
+            }
+
+        }
+
+        for(Map.Entry<Pair<Integer, Integer>, Integer> pair: map.entrySet()){
+            if(pair.getKey().getKey().equals(vrtx)) {
+                edges.remove(pair.getKey());
+            }
+
         }
     }
 
@@ -54,7 +58,7 @@ public class GraphStruct {
     }
 
     public void addEdge(JSpinner from, JSpinner to, JSpinner weight) {
-        edges.put(new Pair<Integer, Integer>((Integer) from.getValue(), (Integer) to.getValue()),(Integer) weight.getValue());
+        edges.put(new Pair<>((Integer) from.getValue(), (Integer) to.getValue()),(Integer) weight.getValue());
     }
 
     public void addEdge(int from, int to, int weight) {
