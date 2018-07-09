@@ -3,6 +3,7 @@ import java.util.Objects;
 public class Vertex<T> {
     private T value;
     private int path;
+    public boolean flag;
 
     private int inTime = Integer.MAX_VALUE;
     private int outTime = Integer.MAX_VALUE;
@@ -10,6 +11,10 @@ public class Vertex<T> {
     public Vertex(T value) {
         this.value = value;
         path = Integer.MAX_VALUE;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public int getPath() {

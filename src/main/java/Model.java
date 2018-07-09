@@ -43,7 +43,11 @@ public class Model {
                         queue.remove(queue.indexOf(pair.getKey()));
                     }
                     queue.add(pair.getKey());
-                    saveToHistory(history, pair.getKey(), "Шаг " + i + ": проверяется вершина %s");
+                    Vertex<T> v  = pair.getKey();
+                    v.setFlag(true);
+
+                    saveToHistory(history,v, "Шаг " + i + ": проверяется вершина %s");
+
                     i++;
                 }
             }
@@ -65,6 +69,7 @@ public class Model {
         toHistory.setInTime(current.getInTime());
         toHistory.setOutTime(current.getOutTime());
         toHistory.setPath(current.getPath());
+        toHistory.setFlag(current.flag);
         return toHistory;
     }
 

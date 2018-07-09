@@ -15,7 +15,6 @@ class Graph extends JPanel {
     public mxGraph graph;
     public Object parent;
 
-
     Graph() {
         setSize(750,420);
         this.graph = new mxGraph();
@@ -50,6 +49,10 @@ class Graph extends JPanel {
             mxCell cell = (mxCell) vertexes.get(stepOne.getVertex().getValue() - 1);
             cell.setValue(history.get(j).getVertex().getValue().toString() +
                     "\n" +"Way "+ history.get(j).getVertex().getPath());
+            if(stepOne.getVertex().flag) {
+                graph.setCellStyle("shape=ellipse;strokeColor=red;fillColor=yellow", new Object[]{cell});
+                stepOne.getVertex().setFlag(false);
+            }
             if (stepOne.getVertex().getInTime() != Integer.MAX_VALUE && stepOne.getVertex().getOutTime() == Integer.MAX_VALUE
                     ) {
                 graph.setCellStyle("shape=ellipse;strokeColor=red;fillColor=#ffa500", new Object[]{cell});
@@ -74,5 +77,4 @@ class Graph extends JPanel {
         this.add(graphComponent, BorderLayout.CENTER);
         this.revalidate();
     }
-
 }

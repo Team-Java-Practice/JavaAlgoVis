@@ -62,6 +62,4 @@ public class Menu extends JFrame {
             io.printStackTrace();
         }
     }
-
-
 }

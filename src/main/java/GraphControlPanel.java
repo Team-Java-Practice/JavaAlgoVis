@@ -67,14 +67,13 @@ public class GraphControlPanel extends JPanel {
                 graph.graph.selectChildCell();
                 Object[] cells = graph.graph.removeCells();
 
-
                 if (cells.length>0) {
                     for (int i = 0; i < 1; i++) {
 
                         if (cells[i] instanceof mxCell) {
                             mxCell c = (mxCell) cells[i];
                             System.out.println(c.getValue()+" i="+i);
-                            if ((Integer) c.getValue() != null) {
+                            if (c.getValue() != null) {
                                 int vrtx = (Integer) c.getValue();
                                 if (graphStruct.checkValue(vrtx)) {
                                     graphStruct.removeVertex(vrtx);
@@ -104,7 +103,6 @@ public class GraphControlPanel extends JPanel {
                 butAdd.setEnabled(true);
                 butUndo.setEnabled(true);
                 butRedo.setEnabled(true);
-
             }
         });
 
@@ -146,7 +144,6 @@ public class GraphControlPanel extends JPanel {
                 butEdge.setEnabled(false);
                 butAdd.setEnabled(false);
 
-
                 MutableValueGraph<Vertex<Integer>, Integer> gr = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
 
                 for (int i = 0; i < graphStruct.getNumberOfVertexes(); i++) {
@@ -161,7 +158,6 @@ public class GraphControlPanel extends JPanel {
                 step = 1;
 
                 graph.paintGraph(graphStruct, history, step, View.textArea);
-
             }
         });
 
@@ -192,8 +188,6 @@ public class GraphControlPanel extends JPanel {
         butOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 graphStruct.clear();
                 JFileChooser fileChooser = new JFileChooser();
                 int returnVal = fileChooser.showDialog(null, "Открыть файл");
@@ -258,7 +252,6 @@ public class GraphControlPanel extends JPanel {
         butRedo.setEnabled(false);
         butStartAlgo.setEnabled(false);
 
-
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridheight = 1;
@@ -275,7 +268,6 @@ public class GraphControlPanel extends JPanel {
 
         butDelete.setEnabled(false);
         butEdge.setEnabled(false);
-
 
         //спиннер для начальной вершины
         SpinnerModel fromSpinnerModel = new SpinnerNumberModel(1, 1, 50, 1);
@@ -310,8 +302,6 @@ public class GraphControlPanel extends JPanel {
         panelWeightSp.setLayout(new BoxLayout(panelWeightSp,BoxLayout.Y_AXIS));
         panelWeightSp.add(new JLabel("weight"));
         panelWeightSp.add(weightSpinner);
-
-
 
         dop1Panel.add(panelFromSp);
         dop1Panel.add(panelToSp);
